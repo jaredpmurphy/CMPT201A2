@@ -1,4 +1,5 @@
-
+#include <stdio.h>
+#include <ncurses.h>
 
 
 
@@ -9,4 +10,11 @@ int main() {
 
 	initscr();
 	noecho();
+	
+	printw("Test");
+
+	refresh();
+
+	getch();
+	endwin();
 }
