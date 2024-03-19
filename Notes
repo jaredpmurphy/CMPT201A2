@@ -28,3 +28,7 @@ Level 1:
 Level 2:
 
 
+remove messages/add messages with seperate functions
+sleep() pauses between levels
+beep() makes a sound
+figlet will make pretty ascii structure
