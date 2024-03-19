@@ -61,7 +61,9 @@ Messages:
 		Oh No! you died
 	press enter:
 		for post level/post splash	
-
+	interactions:
+		space to collect coins
+		o to open door when it is ready
 
 
 screen:
