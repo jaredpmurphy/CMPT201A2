@@ -6,3 +6,7 @@ Title:
 Items:
 
 etc..
+
+noecho()
+ch=getch()
+
