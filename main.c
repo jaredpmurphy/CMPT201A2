@@ -1,17 +1,21 @@
+#include <curses.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
 
 #include "level.h"
 
+
 void prompt_quit() {
 
 }
 
+/** Pause game until 'p' is pressed */
 void pause_game() {
 
 }
 
+/** Display initial splashscreen, with options to start chosen level or quit game */
 void display_splash() {
 
 }
@@ -50,9 +54,29 @@ int main() {
 			case 'q':
 				prompt_quit();
 				close_game();
+				break;
 			case 'p':
 				pause_game();
-	}
+				break;
+			case KEY_UP:
+				//move up
+				break;
+			case KEY_DOWN:
+				//move down
+				break;
+			case KEY_RIGHT:
+				//move right
+				break;
+			case KEY_LEFT:
+				//move left
+				break;
+			case ' ':
+				//collect coin if available when Spacebar pressed
+				break;
+			default:
+				//none
+				break;
+		}
 
 	refresh();
 	}

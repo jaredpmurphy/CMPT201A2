@@ -13,8 +13,7 @@
 #define MAX_GHOSTS 20
 
 /** Simple struct to hold info of a coin */
-typedef struct {
-    char symbol = COIN;
+typedef struct coin_struct {
     vec2 position;
 } coin;
 
