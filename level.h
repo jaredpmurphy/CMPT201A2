@@ -1,6 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include <ncurses.h>
 #include "common.h"
 #include "ghost.h"
 #include "player.h"
@@ -9,7 +10,6 @@
 
 */
 
-#define MAX_AREAS 20
 #define MAX_GHOSTS 20
 
 /** Simple struct to hold info of a coin */
@@ -27,18 +27,21 @@ typedef struct level_struct {
     coin _active_coin;
     vec2 _player_spawn_coord;
     vec2 _door_coord;
-    area _ghost_spawn_areas[MAX_AREAS];
-    area _coin_spawn_areas[MAX_AREAS];
     ghost _active_ghosts[MAX_GHOSTS];
 } level;
 
 
-/** Creates a level struct based on params and returns it*/
+/** Creates a level struct and populates with relevant game info.
+    @param level_num ie level 1, level 2...
+    @param num_ghosts number of ghosts to spawn in this level.
+    @param req_coins how many coins must be collected before door opens.
+    @return level: a newly populated level struct */
 level create_level(unsigned int level_num, unsigned int num_ghosts,
-                    unsigned int req_coins, vec2 player_spawn_coord,
-                    vec2 door_coord, area ghost_spawn_areas[], area coin_spawn_areas);
+                    unsigned int req_coins);
 
-ghost spawn_ghost();
+void display_level(level *lvl, WINDOW *win);
+
+ghost spawn_ghosts();
 
 coin spawn_coin();
 

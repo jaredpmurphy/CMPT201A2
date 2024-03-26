@@ -19,6 +19,8 @@ typedef struct {
     unsigned int x;
 } vec2;
 
+vec2 new_vec2(unsigned int y, unsigned int x);
+
 /** Defines a 2D area with:
     uly=upper left y
     ulx=upper left x
@@ -30,3 +32,5 @@ typedef struct {
     unsigned int lry;
     unsigned int lrx;
 } area;
+
+area new_area(unsigned int uply, unsigned int uplx, unsigned int lory, unsigned int lorx);

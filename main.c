@@ -1,13 +1,13 @@
-#include <curses.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
 
+#include "common.h"
 #include "level.h"
 
 
 void prompt_quit() {
-
+	
 }
 
 /** Pause game until 'p' is pressed */
@@ -16,10 +16,15 @@ void pause_game() {
 }
 
 /** Display initial splashscreen, with options to start chosen level or quit game */
-void display_splash() {
+int splash_screen() {
+	//Display splash logo/message howto play game etc.
+	//Level 1 return 1
+	//Level 2 return 2
+	//Quit return 0
 
 }
 
+/** Safely exit the game by closing out the ncurses window */
 void close_game() {
 	clear();
 	refresh();
@@ -27,26 +32,38 @@ void close_game() {
 	exit(0);
 }
 
-/** This will draw all level entities.
-	This include walls/player/ghosts/coins */
-void draw_level() {
-
-}
-
 
 
 int main() {
-	WINDOW *game_win;
+	WINDOW *game_win; // where the level should be drawn. ~3 lines above will be the lives remaining/info etc..
 	int ch;
 	bool should_close = false;
 
 	unsigned int lives = 3;
-	unsigned int coins = 0;
 
 	initscr();
 	noecho();
+	game_win = newwin(30,80,3,0);
 
-	display_splash();
+	level level_one = create_level(1, 3, 3);
+	level level_two = create_level(2, 5, 7);
+
+	level *current_lvl;
+
+	switch(splash_screen()) {
+		case 0:
+			close_game();
+			break;
+		case 1:
+			current_lvl = &level_one;
+			break;
+		case 2:
+			current_lvl = &level_two;
+			break;
+	}
+
+	// splash screen should set current level before returning
+	display_level(current_lvl, game_win);
 
 	while (!should_close) {
 		ch = getch();
@@ -77,7 +94,7 @@ int main() {
 				//none
 				break;
 		}
-
+	display_level(current_lvl, game_win);
 	refresh();
 	}
 
