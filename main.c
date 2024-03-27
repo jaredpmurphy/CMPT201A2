@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
+#include <time.h>
 
 #include "common.h"
 #include "level.h"
 
 
 void prompt_quit() {
-	
+
 }
 
 /** Pause game until 'p' is pressed */
@@ -19,6 +20,7 @@ void pause_game() {
 int splash_screen() {
 	//Display splash logo/message howto play game etc.
 	//Level 1 return 1
+	return 1;
 	//Level 2 return 2
 	//Quit return 0
 
@@ -35,18 +37,20 @@ void close_game() {
 
 
 int main() {
+	srand(time(NULL)); // init for random num generation
 	WINDOW *game_win; // where the level should be drawn. ~3 lines above will be the lives remaining/info etc..
 	int ch;
 	bool should_close = false;
 
-	unsigned int lives = 3;
 
 	initscr();
 	noecho();
+	raw();
+	keypad(stdscr, TRUE);
 	game_win = newwin(30,80,3,0);
 
-	level level_one = create_level(1, 3, 3);
-	level level_two = create_level(2, 5, 7);
+	level level_one = create_level(1, 3, 3, 3);
+	level level_two = create_level(2, 3, 5, 7);
 
 	level *current_lvl;
 
@@ -62,8 +66,8 @@ int main() {
 			break;
 	}
 
-	// splash screen should set current level before returning
 	display_level(current_lvl, game_win);
+	refresh();
 
 	while (!should_close) {
 		ch = getch();
@@ -77,15 +81,19 @@ int main() {
 				break;
 			case KEY_UP:
 				//move up
+				move_player(current_lvl, UP);
 				break;
 			case KEY_DOWN:
 				//move down
+				move_player(current_lvl, DOWN);
 				break;
 			case KEY_RIGHT:
 				//move right
+				move_player(current_lvl, RIGHT);
 				break;
 			case KEY_LEFT:
 				//move left
+				move_player(current_lvl, LEFT);
 				break;
 			case ' ':
 				//collect coin if available when Spacebar pressed
@@ -94,8 +102,9 @@ int main() {
 				//none
 				break;
 		}
-	display_level(current_lvl, game_win);
-	refresh();
+		display_level(current_lvl, game_win);
+		wrefresh(game_win);
+		refresh();
 	}
 
 	getch();

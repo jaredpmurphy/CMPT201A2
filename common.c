@@ -7,7 +7,7 @@
 
 
 
-vec2 new_vec2(unsigned int _y, unsigned int _x) {
+vec2 new_vec2(int _y, int _x) {
     vec2 ret;
     ret.x = _x;
     ret.y = _y;
@@ -20,4 +20,5 @@ area new_area(unsigned int uply, unsigned int uplx, unsigned int lory, unsigned 
     ret.ulx = uplx;
     ret.lry = lory;
     ret.lrx = lorx;
+    return ret;
 }
