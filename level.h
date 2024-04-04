@@ -26,6 +26,7 @@ typedef struct level_struct {
     unsigned int _collected_coins;
     unsigned int _max_lives;
     unsigned int _current_lives;
+    bool game_over;
     coin _active_coin;
     vec2 _player_spawn_coord;
     vec2 _door_coord;
@@ -71,5 +72,9 @@ void move_ghosts(level *lvl);
     If no lives are left, game over.
     @param lvl pointer to current level. */
 void enemy_check(level *lvl);
+
+/** If player is next to or on top of coin, it will be collected and new coin will be spawned if needed.
+    @param lvl: pointer to level struct. */
+void collect_coin(level *lvl);
 
 #endif
