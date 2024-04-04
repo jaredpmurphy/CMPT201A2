@@ -48,8 +48,12 @@ level create_level(unsigned int level_num, unsigned int max_lives, unsigned int 
     @param win ncurses window to display game in. */
 void display_level(level *lvl, WINDOW *win);
 
+/** Returns a ghost at a random position 
+    @return ghost struct */
 ghost spawn_ghost();
 
+/** Returns a coin with a random position 
+    @return coin struct*/
 coin spawn_coin();
 
 /** If movement is valid, move player in direction supplied.
@@ -62,5 +66,10 @@ void move_player(level *lvl, vec2 direction);
     If player has 0 lives when hit, game over screen will display, which allows resetting coins and lives and respawning or quitting.
     @param lvl pointer to current level. */
 void move_ghosts(level *lvl);
+
+/** Checks if player is touching ghost. If player is touching ghost, loses a life and moves to start of level.
+    If no lives are left, game over.
+    @param lvl pointer to current level. */
+void enemy_check(level *lvl);
 
 #endif

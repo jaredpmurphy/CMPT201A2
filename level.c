@@ -7,6 +7,8 @@
 #include "level.h"
 #include "level_maps.h"
 
+/** Returns a ghost at a random position 
+    @return ghost struct */
 ghost spawn_ghost() {
     int rx = rand() % 75;
     int ry = rand() % 28;
@@ -18,6 +20,8 @@ ghost spawn_ghost() {
     return ret_ghost;
 }
 
+/** Returns a coin with a random position 
+    @return coin struct*/
 coin spawn_coin() {
     int rx = rand() % 75;
     int ry = rand() % 28;
@@ -93,5 +97,13 @@ void move_player(level *lvl, vec2 direction) {
     If player has 0 lives when hit, game over screen will display, which allows resetting coins and lives and respawning or quitting.
     @param lvl pointer to current level. */
 void move_ghosts(level *lvl) {
+
     return;
+}
+
+/** Checks if player is touching ghost. If player is touching ghost, loses a life and moves to start of level.
+    If no lives are left, game over.
+    @param lvl pointer to current level. */
+void enemy_check(level *lvl) {
+    
 }
