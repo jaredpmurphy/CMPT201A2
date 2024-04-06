@@ -1,4 +1,4 @@
-Group 03
+Group 03 Jared Murphy and Georgina
 
 Game: Escape from the Haunted Manor
 Collect enough coins, and the door in the bottom right will open for you to escape.
@@ -17,7 +17,7 @@ overall Goal
 	Escape the haunted mansion by collecting the coins needed to
 	open each door.  Dont let the ghosts catch you
 
-Levels
+Levels: 2D top down mansion/maze
 
 items
 	coins
@@ -25,7 +25,7 @@ items
 		pop up after you collect prior
 		"o" ch
 
-	pacman enemy
+	pacman type enemy
 		"X"
 		if they get you go back to the beginning and maybe 
 		lose a coin?
@@ -78,27 +78,3 @@ Level 1		Lives: <3 <3 <3		Coins:0/3
 __________________________________________________
 
 __________________________________________________
-
-
-Notes:
-Game document
-
-//
-Title: Escape from Haunted Manor
-description
-group members
-
-list functions
-//
-
-Splash Screen:
-
-Level 1:
-
-Level 2:
-
-
-remove messages/add messages with seperate functions
-sleep() pauses between levels
-beep() makes a sound
-figlet will make pretty ascii structure

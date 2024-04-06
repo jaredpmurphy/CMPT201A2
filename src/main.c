@@ -210,7 +210,7 @@ int main() {
 				break;
 		}
 
-		mvprintw(35, 5, "Use arrow keys to move...\nUse SPACE to collect coins...\nWhen you collect enough coins, the door will turn green...\nand you may escape...\nPress 'q' to quite game...");
+		mvprintw(35, 5, "Use arrow keys to move...\nUse SPACE to collect coins...\nWhen you collect enough coins, the door will turn green...\nand you may escape...\nPress 'q' to quite game, 'p' to pause/unpause...");
 
 		display_level(current_lvl, game_win);
 		wrefresh(game_win);
