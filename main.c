@@ -25,12 +25,74 @@ void pause_game() {
 
 /** Display initial splashscreen, with options to start chosen level or quit game
 	@return int: the level number, or 0 if quit selected */
-int splash_screen() {
+int splash_screen(WINDOW *win) {
 	//Display splash logo/message howto play game etc.
-	//if level one selected, return 1
-	return 1;
-	//if level 2 selected return 2
-	//Quit return 0
+	
+	//Game title	
+	 char *block_text=
+                "   ___________                                    \n"
+        "   \\_   _____/ ______ ____ _____  ______   ____   \n"
+        "    |    __)_ /  ___// ___\\\\__  \\ \\____ \\_/ __ \\  \n"
+        "    |        \\\\___ \\\\  \\___ / __ \\|  |_> >  ___/  \n"
+        "   /_______  /____  >\\___  >____  /   __/ \\___  > \n"
+        "           \\/     \\/     \\/     \\/|__|        \\/  \n"
+        "            _____                                  \n"
+        "          _/ ____\\______  ____   _____             \n"
+        "          \\   __\\\\_  __ \\/  _ \\ /     \\            \n"
+        "           |  |   |  | \\(  <_> )  Y Y  \\           \n"
+        "           |__|   |__|   \\____/|__|_|  /           \n"
+        "                                     \\/            \n"
+        "  ___ ___                      __             .___  \n"
+        " /   |   \\_____   __ __  _____/  |_  ____   __| _/  \n"
+        "/    ~    \\__  \\ |  |  \\/    \\   __\\/ __ \\ / __ |   \n"
+        "\\    Y    // __ \\|  |  /   |  \\  | \\  ___// /_/ |   \n"
+        " \\___|_  /(____  /____/|___|  /__|  \\___  >____ |   \n"
+        "       \\/      \\/           \\/          \\/     \\/   \n"
+        "         _____                                    \n"
+        "        /     \\ _____    ____   ___________       \n"
+        "       /  \\ /  \\\\__  \\  /    \\ /  _ \\_  __ \\      \n"
+        "      /    Y    \\/ __ \\|   |  (  <_> )  | \\/      \n"
+        "      \\____|__  (____  /___|  /\\____/|__|         \n"
+        "              \\/     \\/     \\/                    \n";
+
+
+
+        wprintw(win, "%s\n\t      <Press any key to enter>", block_text);
+        wrefresh(win);
+        wgetch(win);
+        wclear(win); 
+
+
+	//Display instructions and game info
+	mvwprintw(win, 8,30, "Welcome to HAUNTED MANOR");
+	mvwprintw(win, 9,15, "Can you find the way out before the ghosts get you?\n");
+	mvwprintw(win, 12,34, "GAME INSTRUCTIONS");
+	mvwprintw(win, 13,0, "Use the arrows to navigate through the floors. You must collect all the needed");
+       	mvwprintw(win, 14,30, "coins to unlock the door.");
+	mvwprintw(win, 16,5, "Be wary... you might not be able to go through walls, but the ghosts can");
+	mvwprintw(win, 20,30, "<Press any key to enter>");
+	wrefresh(win);
+	wgetch(win);
+	wclear(win);
+
+	//New screen to display user menu
+        char *menu_text =
+        "\n\n\n                       ______   ____   ____  __ __ \n"
+        "                      /      \\_/ __ \\ /    \\|  |  \\\n"
+        "                      |  Y Y  \\  ___/|   |  \\  |  /\n"
+        "                      |__|_|  /\\___  >___|  /____/ \n"
+        "                      \\/     \\/     \\/       \n";
+        wprintw(win,"%s",menu_text);
+        mvwprintw(win,13,32,"0. Quit\n");
+        mvwprintw(win,14,31,"1. Level 1\n");
+        mvwprintw(win,15,31,"2. Level 2\n");
+        wrefresh(win);
+
+    	// Wait for another user input
+    	int choice = wgetch(win);
+
+	//return the integer value corresponding with the users choice
+       	return choice - '0';
 
 }
 
@@ -74,18 +136,15 @@ int main() {
 
 	level *current_lvl;
 
-	switch(splash_screen()) {
-		case 0:
-			close_game();
-			break;
-		case 1:
-			current_lvl = &level_one;
-			break;
-		case 2:
-			current_lvl = &level_two;
-			break;
-	}
+	int choice = splash_screen(game_win);
 
+	if (choice == 0) {
+    		close_game();
+	} else if (choice == 1) {
+	    current_lvl = &level_one;
+	} else if (choice == 2) {
+	    current_lvl = &level_two;
+	}
 	display_level(current_lvl, game_win);
 	refresh();
 
@@ -146,7 +205,7 @@ int main() {
 			clear();
 			refresh();
 
-			switch(splash_screen()) {
+			switch(splash_screen(game_win)) {
 			case 0:
 				close_game();
 				break;
@@ -171,7 +230,7 @@ int main() {
 				refresh();
 				getch();
 
-				switch(splash_screen()) {
+				switch(splash_screen(game_win)) {
 				case 0:
 					close_game();
 					break;
