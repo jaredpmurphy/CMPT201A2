@@ -1,9 +1,10 @@
 CFLAGS=-Wall --std=c11
 outName=appGame
 outDir=bin
-SRC=$(wildcard *.c)
+srcDir=src
+SRC=$(wildcard $(srcDir)/*.c)
 OBJ=$(SRC:.c=.o)
-HDR=$(wildcard *.h)
+HDR=$(wildcard $(srcDir)/*.h)
 
 $(outName): $(OBJ) $(HDR)
 	$(CC) $(CFLAGS) $^ -o $(outDir)/$@ -lm -lc -lncurses -ltinfo
@@ -17,7 +18,7 @@ debug: $(OBJ) $(HDR)
 .Phony:clean run_debug run_valgrind Doc
 
 clean:
-	rm -f $(outName) *.o debug
+	rm -rf $(outDir)/* *.o debug doc/html/* doc/latex/*
 
 run_debug: debug
 	gdb ./debug

@@ -6,7 +6,9 @@
 #include "ghost.h"
 #include "player.h"
 
-/** Contains functions for creation of levels and queries for level info
+/** @file level.h
+
+Contains functions for creation of levels and queries for level info
 
 */
 
