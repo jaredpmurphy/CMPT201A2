@@ -1,4 +1,4 @@
-Group 03 Jared Murphy and Georgina
+Group 03 Jared Murphy and Georgina Sanche
 
 Game: Escape from the Haunted Manor
 Collect enough coins, and the door in the bottom right will open for you to escape.
@@ -9,11 +9,10 @@ Press 'q' to quit, or 'p' to pause/unpause.
 
 
 Goal for each level
-	Level 1: get out of the basement, fewer coins, 1 enemy
-	Level 2: your on the main floor, get out the front door,  
-		more coins needed, more enemies
+	Level 1: get out of the basement, few coins, few enemies
+	Level 2: have to collect more coins to escape, more enemies
 
-overall Goal
+Overall Goal
 	Escape the haunted mansion by collecting the coins needed to
 	open each door.  Dont let the ghosts catch you
 
