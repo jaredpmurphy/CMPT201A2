@@ -7,16 +7,11 @@
 #include "common.h"
 #include "level.h"
 
-
-void prompt_quit() {
-
-}
-
 /** Pause game until 'p' is pressed */
 void pause_game() {
 	char ch = ' ';
 	while(ch != 'p') {
-		mvprintw(15, 15, "*******GAME PAUSED********");
+		mvprintw(15, 30, "*******GAME PAUSED********");
 		refresh();
 		ch = getch();
 	}
@@ -91,17 +86,42 @@ int splash_screen(WINDOW *win) {
     	// Wait for another user input
     	int choice = wgetch(win);
 
+		while (choice != '0') {
+			if (choice == '1' || choice == '2') {
+				return choice - '0';
+			} else {
+				choice = wgetch(win);
+			}
+		}
+
 	//return the integer value corresponding with the users choice
-       	return choice - '0';
+       	return 0;
 
 }
 
 /** Safely exit the game by closing out the ncurses window */
-void close_game() {
+void close_game(WINDOW *game_win) {
 	clear();
 	refresh();
+	delwin(game_win);
 	endwin();
 	exit(0);
+}
+
+/** Prompts the user if they want to quit. */
+void prompt_quit(WINDOW *win) {
+	wclear(win);
+	mvwprintw(win, 15, 25, "Are you sure you want to quit?");
+	mvwprintw(win, 16, 25, "Press (1) to quit, (2) to resume...");
+	refresh();
+	wrefresh(win);
+
+	char ch = ' ';
+	while (ch != '1' && ch != '2') {
+		ch = getch();
+		if (ch == '1') close_game(win);
+		if (ch == '2') return;
+	}
 }
 
 
@@ -131,15 +151,15 @@ int main() {
 
 	game_win = newwin(30,80,3,0);
 
-	level level_one = create_level(1, 3, 7, 3);
-	level level_two = create_level(2, 3, 10, 7);
+	level level_one = create_level(1, 3, 5, 3);
+	level level_two = create_level(2, 3, 10, 5);
 
 	level *current_lvl;
 
 	int choice = splash_screen(game_win);
 
 	if (choice == 0) {
-    		close_game();
+    		close_game(game_win);
 	} else if (choice == 1) {
 	    current_lvl = &level_one;
 	} else if (choice == 2) {
@@ -160,8 +180,7 @@ int main() {
 		mvprintw(1, 20, "Coins: %d/%d", current_lvl->_collected_coins, current_lvl->_req_coins);
 		switch (ch) {
 			case 'q':
-				prompt_quit();
-				close_game();
+				prompt_quit(game_win);
 				break;
 			case 'p':
 				pause_game();
@@ -191,6 +210,8 @@ int main() {
 				break;
 		}
 
+		mvprintw(35, 5, "Use arrow keys to move...\nUse SPACE to collect coins...\nWhen you collect enough coins, the door will turn green...\nand you may escape...\nPress 'q' to quite game...");
+
 		display_level(current_lvl, game_win);
 		wrefresh(game_win);
 		refresh();
@@ -207,16 +228,16 @@ int main() {
 
 			switch(splash_screen(game_win)) {
 			case 0:
-				close_game();
+				close_game(game_win);
 				break;
 			case 1:
 				// recreate level so data is freshly init'd
-				level_one = create_level(1, 3, 7, 3);
+				level_one = create_level(1, 3, 5, 3);
 				current_lvl = &level_one;
 				break;
 			case 2:
 				// recreate level so data is freshly init'd
-				level_two = create_level(2, 3, 10, 7);
+				level_two = create_level(2, 3, 10, 5);
 				current_lvl = &level_two;
 				break;
 			}
@@ -225,25 +246,30 @@ int main() {
 			&& current_lvl->_collected_coins >= current_lvl->_req_coins) {
 				clear();
 				wclear(game_win);
-				mvprintw(15, 30, "YOU WON!!!!");
+				mvprintw(15, 30, "YOU WON THE LEVEL!!!!");
 				mvprintw(16, 30, "Press any key to continue...");
 				refresh();
-				getch();
 
-				switch(splash_screen(game_win)) {
-				case 0:
-					close_game();
-					break;
-				case 1:
-					// recreate level so data is freshly init'd
-					level_one = create_level(1, 3, 7, 3);
-					current_lvl = &level_one;
-					break;
-				case 2:
-					// recreate level so data is freshly init'd
-					level_two = create_level(2, 3, 10, 7);
+				if(current_lvl->_level_num == 1) {
+					level_two = create_level(2, 3, 10, 5);
 					current_lvl = &level_two;
-					break;
+				} else {
+					getch();
+					switch(splash_screen(game_win)) {
+						case 0:
+							close_game(game_win);
+							break;
+						case 1:
+							// recreate level so data is freshly init'd
+							level_one = create_level(1, 3, 5, 3);
+							current_lvl = &level_one;
+							break;
+						case 2:
+							// recreate level so data is freshly init'd
+							level_two = create_level(2, 3, 10, 5);
+							current_lvl = &level_two;
+							break;
+					}
 				}
 			}
 

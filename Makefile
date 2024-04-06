@@ -1,19 +1,20 @@
 CFLAGS=-Wall --std=c11
-outName=myGame
+outName=appGame
+outDir=bin
 SRC=$(wildcard *.c)
 OBJ=$(SRC:.c=.o)
 HDR=$(wildcard *.h)
 
 $(outName): $(OBJ) $(HDR)
-	$(CC) $(CFLAGS) $^ -o $@ -lm -lc -lncurses -ltinfo
+	$(CC) $(CFLAGS) $^ -o $(outDir)/$@ -lm -lc -lncurses -ltinfo
 
 debug: $(OBJ) $(HDR)
-	$(CC) $(CFLAGS) -g $^ -o $@ -lm -lc -lncurses -ltinfo
+	$(CC) $(CFLAGS) -g $^ -o $(outDir)/$@ -lm -lc -lncurses -ltinfo
 	
 %.o:%.c
 	$(CC) $(CFLAGS) -c -g $^ -o $@
 
-.Phony:clean run_debug run_valgrind
+.Phony:clean run_debug run_valgrind Doc
 
 clean:
 	rm -f $(outName) *.o debug
@@ -21,5 +22,8 @@ clean:
 run_debug: debug
 	gdb ./debug
 
-run_valgrind: debug
-	valgrind -s --track-origins=yes --leak-check=full ./debug
+Mem_valgrind: debug
+	valgrind --track-origins=yes --leak-check=full ./bin/debug
+
+Doc: $(SRC) $(HDR)
+	doxygen doxy.conf
